@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { Tabs, Table } from "antd";
+import { Tabs, Table, Checkbox } from "antd";
 import { useExcelUploaderController } from "./controller";
-import { IExcel, IExcelRecordData } from "../../shares/readExcelFIle";
+import { IExcel, IExcelRecordData } from "../../shares/readExcelFile";
 const { TabPane } = Tabs;
 
 function getColumns() {
@@ -20,27 +20,26 @@ function getColumns() {
       title: "Data",
       dataIndex: "data",
       key: "data",
-      
     },
-    // {
-    //   title: "Is Formula",
-    //   dataIndex: "isFormula",
-    //   key: "isFormula",
-    //   render: (isFormula: boolean) => (isFormula ? "Yes" : "No"),
-    // },
   ];
 }
 
 const getRowClassName = (record: IExcelRecordData) => {
-  return record.isFormula ? 'green-row' : '';
+  return record.isFormula ? "green-row" : "";
 };
 
 const Container: FC = () => {
-  const { handleFileChange, excelData } = useExcelUploaderController();
+  const { handleFileChange, handleFilterChange, excelData, filterFormula } =
+    useExcelUploaderController();
   return (
     <div>
       <div>
         <h1>Upload Excel</h1>
+      </div>
+      <div>
+        <Checkbox checked={filterFormula} onChange={handleFilterChange}>
+          Show only formula
+        </Checkbox>
       </div>
       <div>
         <input type="file" onChange={handleFileChange} />
@@ -56,7 +55,7 @@ const Container: FC = () => {
                   columns={getColumns()}
                   bordered
                   pagination={{ pageSize: 10 }}
-                  rowClassName={getRowClassName} 
+                  rowClassName={getRowClassName}
                 />
               </TabPane>
             ))}
