@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Tabs, Table, Checkbox } from "antd";
+import { Tabs, Table, Checkbox, Button } from "antd";
 import { useExcelUploaderController } from "./controller";
 import { IExcel, IExcelRecordData } from "../../shares/readExcelFile";
 const { TabPane } = Tabs;
@@ -29,7 +29,7 @@ const getRowClassName = (record: IExcelRecordData) => {
 };
 
 const Container: FC = () => {
-  const { handleFileChange, handleFilterChange, excelData, filterFormula } =
+  const { handleFileChange, handleFilterChange, handleExportExcel, excelData, filterFormula } =
     useExcelUploaderController();
   return (
     <div>
@@ -47,6 +47,7 @@ const Container: FC = () => {
 
       {excelData.length > 0 && (
         <div className="table-content">
+          <Button onClick={handleExportExcel}>Export Excel</Button>
           <Tabs>
             {excelData.map((sheet: IExcel) => (
               <TabPane tab={sheet.sheetName} key={sheet.sheetName}>

@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { IExcelUploaderCtrl } from "./interface";
 import readExcelFile, { IExcel } from "../../shares/readExcelFile";
+import exportExcelFile from "../../shares/exportExcelFile";
 
 export const useExcelUploaderController: IExcelUploaderCtrl = () => {
   const [excelData, setExcelData] = useState<IExcel[]>([]);
@@ -30,26 +31,16 @@ export const useExcelUploaderController: IExcelUploaderCtrl = () => {
 
   const handleFilterChange = useCallback((e: any) => {
     setFilterFormula(e.target.checked);
-
-    // setExcelData((prev) => {
-    //   const newData = prev.map((sheet) => {
-    //     const newSheet = { ...sheet };
-    //     newSheet.data = sheet.data.filter((record) => {
-    //       if (e.target.checked) {
-    //         return record.isFormula;
-    //       } else {
-    //         return true;
-    //       }
-    //     });
-    //     return newSheet;
-    //   });
-    //   return newData;
-    // })
   }, []);
+
+  const handleExportExcel = useCallback(() => {
+    exportExcelFile(displayExcelData);
+  }, [displayExcelData]);
 
   return {
     handleFileChange,
     handleFilterChange,
+    handleExportExcel,
     excelData: displayExcelData,
     filterFormula
   };

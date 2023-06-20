@@ -6,6 +6,7 @@ export interface IExcelUploaderCtrlOutput {
     filterFormula: boolean;
     handleFileChange: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
     handleFilterChange: (e: any) => void;
+    handleExportExcel: () => void;
 }
 
 export type IExcelUploaderCtrl = () => IExcelUploaderCtrlOutput;
